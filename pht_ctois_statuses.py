@@ -191,9 +191,9 @@ def create_pht_ctois_statuses_table(query_tesspoint=True, save=True, default_col
     df["Disposition"] = [calc_disp(disp, flag) for disp, flag in zip(df["TFOPWG Disposition"], df["Paper Flag"])]
 
     # aggregate follow up
-    df["Has Time Series"] = (df["TOI Time Series Observations"] > 0  | ~pd.isna(df["Paper Photometry"])).fillna(False)
-    df["Has Spectroscopy"] = (df["TOI Spectroscopy Observations"] > 0  | ~pd.isna(df["Paper Spectroscopy"])).fillna(False)
-    df["Has Imaging"] = (df["TOI Imaging Observations"] > 0  | ~pd.isna(df["Paper Speckle"])).fillna(False)
+    df["Has Time Series"] = ((df["TOI Time Series Observations"] > 0)  | ~pd.isna(df["Paper Photometry"])).fillna(False)
+    df["Has Spectroscopy"] = ((df["TOI Spectroscopy Observations"] > 0)  | ~pd.isna(df["Paper Spectroscopy"])).fillna(False)
+    df["Has Imaging"] = ((df["TOI Imaging Observations"] > 0)  | ~pd.isna(df["Paper Speckle"])).fillna(False)
 
     if default_columns_only:
         df = df [[
