@@ -58,7 +58,7 @@ def get_tess_ctois(cache_policy_func=DEFAULT_CACHE_POLICY):
 
 def get_pht_ctois(cache_policy_func=DEFAULT_CACHE_POLICY):
     df = get_tess_ctois(cache_policy_func=cache_policy_func)
-    return df[df["User"] == "eisner"].reset_index(drop=True)
+    return df[df["User"].isin(["eisner", "aigrain", "mason"])].reset_index(drop=True)
 
 
 def _get_coord_j2000_of_tics(tics):
