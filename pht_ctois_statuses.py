@@ -1,5 +1,6 @@
 # Aggregate various sources of information for PHT CTOI
 
+import numpy as np
 import pandas as pd
 
 import download_utils
@@ -149,6 +150,9 @@ def create_pht_ctois_statuses_table(query_tesspoint=True, save=True, default_col
     # to avoid confusion, we proactively drop it
     df_ctois.drop(columns=["TFOPWG Disposition"], inplace=True)
 
+    # an approximation, as it does not take into account of extinction, etc.
+    df_ctois["Approximate Absolute TESS Mag"] = df_ctois["TESS Mag"] - 5 * np.log10(df_ctois['Stellar Distance (pc)']/10)
+
     df_tois = get_tess_tois()
     if query_tesspoint:
         download_pht_ctoi_sectors()
@@ -209,6 +213,10 @@ def create_pht_ctois_statuses_table(query_tesspoint=True, save=True, default_col
         "TOI Time Series Observations", "TOI Spectroscopy Observations", "TOI Imaging Observations",
         "Paper Photometry", "Paper Spectroscopy", "Paper Speckle",
         "TESS Mag", "Transit Epoch (BTJD)", "Period (days)", "Depth ppm", "Duration (hrs)",
+        # add estimated planet radius, stellar parameters, and RA/Dec that could be useful in prioritization
+        'Planet Radius (R_Earth)',
+        'Stellar Distance (pc)', 'Stellar Eff Temp (K)', "Approximate Absolute TESS Mag", 'Stellar Radius (R_Sun)',
+        "RA", "Dec",
         "CTOI lastmod", "TOI Date Modified",
         ]]
 
