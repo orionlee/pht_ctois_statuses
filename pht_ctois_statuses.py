@@ -1,5 +1,5 @@
 # Aggregate various sources of information for PHT CTOI
-
+3
 import numpy as np
 import pandas as pd
 
@@ -8,10 +8,12 @@ import download_utils
 BTJD_REF = 2457000
 
 TOI_CSV_URL = (
-    "https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv"
+    "https://exofop.ipac.caltech.edu/tess/json/tois.csv"
+    #"https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv"
 )
 CTOI_CSV_URL = (
-    "https://exofop.ipac.caltech.edu/tess/download_ctoi.php?sort=ctoi&output=csv"
+    "https://exofop.ipac.caltech.edu/tess/json/ctois.csv"
+    #"https://exofop.ipac.caltech.edu/tess/download_ctoi.php?sort=ctoi&output=csv"
 )
 
 
@@ -217,7 +219,7 @@ def create_pht_ctois_statuses_table(query_tesspoint=True, save=True, default_col
         'Planet Radius (R_Earth)',
         'Stellar Distance (pc)', 'Stellar Eff Temp (K)', "Approximate Absolute TESS Mag", 'Stellar Radius (R_Sun)',
         "RA", "Dec",
-        "CTOI lastmod", "TOI Date Modified",
+        "CTOI Lastmod", "TOI Date Modified",
         ]]
 
     if save:
@@ -238,3 +240,9 @@ def load_pht_ctois_statuses_table():
         dtypes_map[col] = "Int64"
 
     return pd.read_csv(csv_path, dtype=dtypes_map)
+
+
+if __name__ == "__main__":
+    print("Tabulating PHT CTOI status...")
+    df = create_pht_ctois_statuses_table(default_columns_only=True)
+    print(df)
